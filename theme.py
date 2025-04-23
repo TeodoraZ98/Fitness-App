@@ -24,7 +24,8 @@ def inject_custom_css(hide_sidebar=False):
     st.markdown(css, unsafe_allow_html=True)
 
 def handle_logout():
-    query_params = st.query_params
+    query_params = st.experimental_get_query_params()
+
     if "logout" in query_params:
         for key in list(st.session_state.keys()):
             del st.session_state[key]
