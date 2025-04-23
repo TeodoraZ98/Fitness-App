@@ -10,6 +10,16 @@ def get_logo_base64(path="logo.png"):
 
 st.set_page_config(page_title="Transform Zone", page_icon="logo.png", layout="wide")
 
+# Hide sidebar ONLY on Home page
+st.markdown("""
+    <style>
+    [data-testid="stSidebar"], [data-testid="collapsedControl"] {
+        display: none !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
 # --- Theme ---
 st.markdown("""
 <style>
