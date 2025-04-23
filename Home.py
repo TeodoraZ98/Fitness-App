@@ -177,23 +177,88 @@ header, [data-testid="stHeader"] {
 
 logo_base64 = get_logo_base64()
 
-# --- HEADER ---
-st.markdown(f"""
-<div class="custom-nav">
-    <div class="nav-group">
-        <img src="data:image/png;base64,{logo_base64}" width="50">
-        <button class="nav-btn" onclick="window.location.href='/Home'">Home</button>
-        <button class="nav-btn" onclick="window.location.href='/Calculator'">Calculator</button>
-        <button class="nav-btn" onclick="window.location.href='/Meals'">Meals</button>
-        <button class="nav-btn" onclick="window.location.href='/Supplements'">Supplements</button>
-    </div>
-    <div class="nav-highlight">🔥 Get 20% Off Meal Plans!</div>
-    <div class="nav-group">
-        <button class="nav-btn" onclick="window.location.href='/Premium'">Premium</button>
-        <button class="nav-btn" onclick="window.location.href='/Login'">Login</button>
-    </div>
-</div>
+# --- FIXED HEADER NAVIGATION ---
+st.markdown("""
+    <style>
+    .fixed-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        background-color: #1a1a1a;
+        padding: 16px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #333;
+    }
+
+    .fixed-header .nav-left, .nav-right {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+    }
+
+    .nav-btn {
+        font-weight: 600;
+        font-size: 1.2rem;
+        padding: 8px 18px;
+        border-radius: 6px;
+        background: none;
+        border: 1px solid transparent;
+        color: white;
+        cursor: pointer;
+    }
+
+    .nav-btn:hover {
+        border-color: #5e60ce;
+        color: #5e60ce;
+    }
+
+    .nav-highlight {
+        color: #c59d41;
+        font-weight: 700;
+        text-shadow: 0 0 2px #c59d41;
+        font-size: 1.1rem;
+    }
+
+    /* Push content below header */
+    .main > div {
+        padding-top: 90px;
+    }
+    </style>
 """, unsafe_allow_html=True)
+
+with st.container():
+    st.markdown(f"""
+    <div class="fixed-header">
+        <div class="nav-left">
+            <img src="data:image/png;base64,{logo_base64}" width="50">
+    """, unsafe_allow_html=True)
+
+    col1, col2, col3, col4 = st.columns([1.3, 1.3, 1.3, 1.3])
+    with col1:
+        if st.button("Home", key="nav_home"): switch_page("Home")
+    with col2:
+        if st.button("Calculator", key="nav_calc"): switch_page("Calculator")
+    with col3:
+        if st.button("Meals", key="nav_meals"): switch_page("Meals")
+    with col4:
+        if st.button("Supplements", key="nav_supps"): switch_page("Supplements")
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown('<div class="nav-highlight">🔥 Get 20% Off Meal Plans!</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="nav-right">', unsafe_allow_html=True)
+    col5, col6 = st.columns([1, 1])
+    with col5:
+        if st.button("Premium", key="nav_premium"): switch_page("Premium")
+    with col6:
+        if st.button("Login", key="nav_login"): switch_page("Login")
+    st.markdown('</div></div>', unsafe_allow_html=True)
+
 
 # --- HERO SECTION ---
 st.markdown("""
