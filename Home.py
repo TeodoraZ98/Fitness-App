@@ -2,25 +2,13 @@ import streamlit as st
 import base64
 from streamlit_extras.switch_page_button import switch_page
 
-
 def get_logo_base64(path="logo.png"):
     with open(path, "rb") as f:
         return base64.b64encode(f.read()).decode()
 
-
 st.set_page_config(page_title="Transform Zone", page_icon="logo.png", layout="wide")
 
-# Hide sidebar ONLY on Home page
-st.markdown("""
-    <style>
-    [data-testid="stSidebar"], [data-testid="collapsedControl"] {
-        display: none !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-
-# --- Theme ---
+# --- STYLE FIX ---
 st.markdown("""
 <style>
 html, body {
@@ -29,276 +17,97 @@ html, body {
     font-family: 'Segoe UI', sans-serif;
 }
 
-[data-testid="stAppViewContainer"] > .main,
-[data-testid="stMainBlockContainer"],
-[data-testid="stAppViewBlockContainer"] {
+[data-testid="stAppViewContainer"] > .main {
     background-color: #000000 !important;
+}
+[data-testid="stMainBlockContainer"] {
+    background-color: #000000 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin-top: 100px; /* Adjust for header height */
+}
+
+/* Hide sidebar ONLY on Home */
+[data-testid="stSidebar"], [data-testid="collapsedControl"] {
+    display: none !important;
 }
 
 header, [data-testid="stHeader"] {
     display: none !important;
 }
 
-.main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px;
-}
-
-/* --- HEADER --- */
-.custom-nav {
+/* --- HEADER NAVIGATION --- */
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    background-color: #1a1a1a;
+    padding: 16px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 40px;
-    background-color: #1a1a1a;
     border-bottom: 1px solid #333;
-    font-size: 1.3rem;
-    font-weight: 600;
-    z-index: 999;
 }
-.nav-group {
+
+.fixed-header .nav-left, .nav-right {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     align-items: center;
 }
+
 .nav-btn {
-    background: none;
-    color: white;
-    border: none;
     font-weight: 600;
+    font-size: 1.2rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+    background: none;
+    border: 1px solid transparent;
+    color: white;
     cursor: pointer;
-    transition: color 0.2s ease;
 }
+
 .nav-btn:hover {
+    border-color: #5e60ce;
     color: #5e60ce;
 }
+
 .nav-highlight {
     color: #c59d41;
     font-weight: 700;
     text-shadow: 0 0 2px #c59d41;
-}
-
-/* --- HERO --- */
-.hero-img {
-    background-image: url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1');
-    background-size: cover;
-    background-position: center;
-    height: 700px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-    text-shadow: 0px 0px 10px rgba(0,0,0,0.75);
-    padding: 0 20px;
-}
-.hero-img h1 {
-    font-size: 4.5rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-.hero-img p {
-    font-size: 1.5rem;
-    margin-bottom: 35px;
-    max-width: 850px;
-}
-.cta-button {
-    background-color: #5e60ce;
-    padding: 18px 42px;
-    border-radius: 8px;
-    color: #ffffff !important;
-    font-size: 1.3rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.3s ease-in-out;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
-}
-.cta-button:hover {
-    background-color: #4a4cc7;
-}
-
-/* --- FEATURES --- */
-.feature-columns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-    margin-top: 60px;
-}
-.feature-card {
-    background-color: #2b2b2b;
-    border-radius: 12px;
-    padding: 25px;
-    width: 420px;
-    box-shadow: 0px 2px 12px rgba(255,255,255,0.05);
-    transition: all 0.3s ease-in-out;
-}
-.feature-card:hover {
-    box-shadow: 0px 8px 24px rgba(255,255,255,0.1);
-}
-.feature-card h4 {
-    font-size: 1.5rem;
-    color: #ffffff;
-    margin-bottom: 10px;
-}
-.feature-card p {
-    font-size: 1.2rem;
-    color: #cccccc;
-}
-.feature-card a {
-    color: #5e60ce;
-    text-decoration: none;
-}
-.feature-card a:hover {
-    color: #7c7ef3;
-}
-
-/* --- FOOTER --- */
-.footer {
-    background-color: #1a1a1a;
-    padding: 30px 40px;
-    margin-top: 60px;
-    border-top: 1px solid #333;
-    color: #aaaaaa;
-    font-size: 0.95rem;
-    text-align: center;
-}
-.footer a {
-    color: #5e60ce;
-    text-decoration: none;
-}
-.footer a:hover {
-    color: #7c7ef3;
+    font-size: 1.1rem;
 }
 </style>
 """, unsafe_allow_html=True)
 
 logo_base64 = get_logo_base64()
 
-# --- FIXED HEADER NAVIGATION ---
-st.markdown("""
-    <style>
-    .fixed-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 10000;
-        background-color: #1a1a1a;
-        padding: 16px 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #333;
-    }
-
-    .fixed-header .nav-left, .nav-right {
-        display: flex;
-        gap: 25px;
-        align-items: center;
-    }
-
-    .nav-btn {
-        font-weight: 600;
-        font-size: 1.2rem;
-        padding: 8px 18px;
-        border-radius: 6px;
-        background: none;
-        border: 1px solid transparent;
-        color: white;
-        cursor: pointer;
-    }
-
-    .nav-btn:hover {
-        border-color: #5e60ce;
-        color: #5e60ce;
-    }
-
-    .nav-highlight {
-        color: #c59d41;
-        font-weight: 700;
-        text-shadow: 0 0 2px #c59d41;
-        font-size: 1.1rem;
-    }
-
-    /* Push content below header */
-    .main > div {
-        padding-top: 90px;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-with st.container():
-    st.markdown(f"""
-    <div class="fixed-header">
-        <div class="nav-left">
-            <img src="data:image/png;base64,{logo_base64}" width="50">
-    """, unsafe_allow_html=True)
-
-    col1, col2, col3, col4 = st.columns([1.3, 1.3, 1.3, 1.3])
-    with col1:
-        if st.button("Home", key="nav_home"): switch_page("Home")
-    with col2:
-        if st.button("Calculator", key="nav_calc"): switch_page("Calculator")
-    with col3:
-        if st.button("Meals", key="nav_meals"): switch_page("Meals")
-    with col4:
-        if st.button("Supplements", key="nav_supps"): switch_page("Supplements")
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown('<div class="nav-highlight">🔥 Get 20% Off Meal Plans!</div>', unsafe_allow_html=True)
-
-    st.markdown('<div class="nav-right">', unsafe_allow_html=True)
-    col5, col6 = st.columns([1, 1])
-    with col5:
-        if st.button("Premium", key="nav_premium"): switch_page("Premium")
-    with col6:
-        if st.button("Login", key="nav_login"): switch_page("Login")
-    st.markdown('</div></div>', unsafe_allow_html=True)
-
-
-# --- HERO SECTION ---
-st.markdown("""
-<div class="hero-img">
-    <h1>Transform Zone</h1>
-    <p>Your personal fitness companion — reach your goals faster with next-gen fitness tools designed for nutrition, performance, and recovery.</p>
-    <a href="/Login" class="cta-button">Get Started</a>
-</div>
-""", unsafe_allow_html=True)
-
-# --- FEATURES ---
-st.markdown("""
-<div class="main-content">
-    <div class="feature-columns">
-        <div class="feature-card">
-            <h4><a href="/Calculator">Macro & Calorie Calculators</a></h4>
-            <p>Set your goals and determine how much protein, fat, and carbs you need each day.</p>
-        </div>
-        <div class="feature-card">
-            <h4><a href="/Meals">Personalized Meal Plans</a></h4>
-            <p>Smart meals calculated using your TDEE — powered by Spoonacular API.</p>
-        </div>
-        <div class="feature-card">
-            <h4><a href="/Supplements">Supplement Recommendations</a></h4>
-            <p>Get evidence-based suggestions to enhance your performance and recovery.</p>
-        </div>
-        <div class="feature-card">
-            <h4><a href="/Premium">Premium Access</a></h4>
-            <p>Unlock guides, macro history, downloads and personalized support.</p>
-        </div>
+# --- HEADER NAVIGATION ---
+st.markdown(f"""
+<div class="fixed-header">
+    <div class="nav-left">
+        <img src="data:image/png;base64,{logo_base64}" width="50">
+        <button class="nav-btn" onclick="window.location.href='/'">Home</button>
+        <button class="nav-btn" onclick="window.location.href='/Calculator'">Calculator</button>
+        <button class="nav-btn" onclick="window.location.href='/Meals'">Meals</button>
+        <button class="nav-btn" onclick="window.location.href='/Supplements'">Supplements</button>
+    </div>
+    <div class="nav-highlight">🔥 Get 20% Off Meal Plans!</div>
+    <div class="nav-right">
+        <button class="nav-btn" onclick="window.location.href='/Premium'">Premium</button>
+        <button class="nav-btn" onclick="window.location.href='/Login'">Login</button>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# --- FOOTER ---
+# --- HERO SECTION ---
 st.markdown("""
-<div class="footer">
-    <p><strong>Contact Us:</strong> support@transformzone.com | +1 234 567 8901</p>
-    <p>© 2025 Transform Zone. All rights reserved.
-    <a href="/Privacy">Privacy Policy</a> |
-    <a href="/Terms">Terms of Service</a></p>
+<div class="hero-img" style="background-image: url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1'); background-size: cover; background-position: center; height: 700px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-top: 50px;">
+    <h1 style="font-size: 4.5rem; font-weight: 700; text-shadow: 0px 0px 10px rgba(0,0,0,0.75);">Transform Zone</h1>
+    <p style="font-size: 1.5rem; max-width: 850px; text-shadow: 0px 0px 10px rgba(0,0,0,0.75);">Your personal fitness companion — reach your goals faster with next-gen fitness tools designed for nutrition, performance, and recovery.</p>
+    <a href="/Login" class="cta-button" style="background-color: #5e60ce; padding: 18px 42px; border-radius: 8px; color: #ffffff; font-size: 1.3rem; font-weight: 600; text-decoration: none; margin-top: 25px; box-shadow: 0px 4px 12px rgba(0,0,0,0.3);">Get Started</a>
 </div>
 """, unsafe_allow_html=True)
