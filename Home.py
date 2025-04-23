@@ -2,6 +2,7 @@ import streamlit as st
 import base64
 from streamlit_extras.switch_page_button import switch_page
 
+st.set_page_config(page_title="Transform Zone", page_icon="logo.png", layout="wide")
 
 def get_logo_base64(path="logo.png"):
     with open(path, "rb") as f:
@@ -16,7 +17,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.set_page_config(page_title="Transform Zone", page_icon="logo.png", layout="wide")
 
 # ✅ Fix flash — force dark background before any render
 st.markdown("""
