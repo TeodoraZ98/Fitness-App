@@ -2,3 +2,4 @@ streamlit
 streamlit-authenticator
 bcrypt
 streamlit-extras
+streamlit-cookies-manager
